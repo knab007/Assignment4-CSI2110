@@ -364,7 +364,7 @@ public class PasswordCracker {
 	public String ruleOne(String plainPassword) {
 	    // rules #1: Capitalize the first letter of each word starting with a letter
 		if (Character.isLetter(plainPassword.charAt(0)))
-			if (Character.isUpperCase(plainPassword.charAt(0))) {
+			if (Character.isLowerCase(plainPassword.charAt(0))) {
 				plainPassword = plainPassword.substring(0, 1).toUpperCase() + plainPassword.substring(1);
 				return plainPassword;
 			}
@@ -378,31 +378,28 @@ public class PasswordCracker {
 	
 	public String ruleThree(String plainPassword) {
 	    // rules #3: Use @ instead of a
-	    if (plainPassword.indexOf("a")!=-1) {
-			plainPassword =  plainPassword.substring(0, plainPassword.indexOf("a")) 
-					+ "@" + plainPassword.substring(plainPassword.indexOf("a")+1);
-			return plainPassword;
-	    }
-	    return null;
+		if (plainPassword.indexOf("a")==-1)
+			return null;
+		else
+			plainPassword = plainPassword.replaceAll("a", "@");
+	    return plainPassword;
 	}
 	
 	public String ruleFour(String plainPassword) {
 	    // rules #4: Use 3 instead of e
-	    if (plainPassword.indexOf("e")!=-1) {
-	    	plainPassword =  plainPassword.substring(0, plainPassword.indexOf("e")) 
-					+ "3" + plainPassword.substring(plainPassword.indexOf("e")+1);
-	    	return plainPassword;
-	    }
-	    return null;
+		if (plainPassword.indexOf("e")==-1)
+			return null;
+		else
+			plainPassword = plainPassword.replaceAll("e", "3");
+	    return plainPassword;
 	}
 	
 	public String ruleFive(String plainPassword) {
 	    // rules #5: Use 1 instead of i
-	    if (plainPassword.indexOf("i")!=-1) {
-	    	plainPassword =  plainPassword.substring(0, plainPassword.indexOf("i")) 
-					+ "1" + plainPassword.substring(plainPassword.indexOf("i")+1);
-	    	return plainPassword;
-	    }
-	    return null;
+		if (plainPassword.indexOf("i")==-1)
+			return null;
+		else
+			plainPassword = plainPassword.replaceAll("i", "1");
+	    return plainPassword;
 	}
 }
