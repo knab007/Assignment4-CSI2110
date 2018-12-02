@@ -36,6 +36,7 @@ public class DatabaseStandard implements DatabaseInterface {
 		// TODO Auto-generated method stub
 		System.out.println("*** DatabaseStandard Statistics ***");
 		System.out.println("Size is "+this.size()+" passwords.");
+		System.out.println("Initial Number of Indexes when Created 16");
 		System.out.println("*** End DatabaseStandard Statistics ***");
 	}
 

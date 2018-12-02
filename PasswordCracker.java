@@ -268,7 +268,7 @@ public class PasswordCracker {
 		    // Rule #1 & #2 & #3 & #4
 		    plainPasswordrule = ruleOne(plainPassword);
 		    if (plainPasswordrule != null) {
-		    	plainPasswordrule = ruleTwo(plainPassword);
+		    	plainPasswordrule = ruleTwo(plainPasswordrule);
 			    plainPasswordrule = ruleThree(plainPasswordrule);
 			    if (plainPasswordrule != null) {
 				    plainPasswordrule = ruleFour(plainPasswordrule);
@@ -282,7 +282,7 @@ public class PasswordCracker {
 		    // Rule #1 & #2 & #3 & #5
 		    plainPasswordrule = ruleOne(plainPassword);
 		    if (plainPasswordrule != null) {
-		    	plainPasswordrule = ruleTwo(plainPassword);
+		    	plainPasswordrule = ruleTwo(plainPasswordrule);
 			    plainPasswordrule = ruleThree(plainPasswordrule);
 			    if (plainPasswordrule != null) {
 				    plainPasswordrule = ruleFive(plainPasswordrule);
@@ -296,7 +296,7 @@ public class PasswordCracker {
 		    // Rule #1 & #2 & #4 & #5
 		    plainPasswordrule = ruleOne(plainPassword);
 		    if (plainPasswordrule != null) {
-		    	plainPasswordrule = ruleTwo(plainPassword);
+		    	plainPasswordrule = ruleTwo(plainPasswordrule);
 			    plainPasswordrule = ruleFour(plainPasswordrule);
 			    if (plainPasswordrule != null) {
 				    plainPasswordrule = ruleFive(plainPasswordrule);
@@ -340,7 +340,7 @@ public class PasswordCracker {
 		    // Rule #1 & #2 & #3 & #4 & #5
 		    plainPasswordrule = ruleOne(plainPassword);
 		    if (plainPasswordrule != null) {
-			    plainPasswordrule = ruleTwo(plainPassword);
+			    plainPasswordrule = ruleTwo(plainPasswordrule);
 			    plainPasswordrule = ruleThree(plainPasswordrule);
 			    if (plainPasswordrule != null) {
 			    	plainPasswordrule = ruleFour(plainPasswordrule);
