@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class Test {
 	public static void main(String[] args) throws UnsupportedEncodingException{
 		PasswordCracker testCracker = new PasswordCracker();
-		DatabaseStandard database1 = new DatabaseStandard();
+		DatabaseMine database1 = new DatabaseMine();
 		ArrayList<String> commonPass = new ArrayList<String>();
 		commonPass.add("123456");
 		commonPass.add("password"); 

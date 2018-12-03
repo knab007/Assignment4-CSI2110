@@ -39,8 +39,13 @@ public class DatabaseMine implements DatabaseInterface {
 	
 	// private:
 	public int hashFunction(String key) {
-		int address=key.hashCode()%N;
-		return (address>=0)?address:(address+N);
+		int address=key.hashCode()% this.N;
+		return (address>=0)?address:(address + this.N);
+	}
+	
+	public int hashFunction(String key, int newN) {
+		int address = key.hashCode()% newN;
+		return (address>=0)?address:(address + newN);
 	}
 
 	@Override
@@ -51,27 +56,75 @@ public class DatabaseMine implements DatabaseInterface {
 		// val: plainPassword
 
 		int hashval = this.hashFunction(encryptedPassword);
-		int idx = 0;
 		int offset = 0;
+		int idx = (hashval + offset) % this.N;
 		String oldval = null; // not null only if SHA has already exist
 
 		if (this.keys[hashval] != null) {
 			this.nDisp += 1;
 		}
 		// start probling, i.e., finding a place for this element to sleep...
-		while (this.keys[(idx = (hashval + offset) % this.N)] != null) {
+		while (this.keys[idx] != null) {
+			if (this.keys[idx].compareTo(encryptedPassword)==0) {
+				// Same key already in the hash table, return old values and save the new one
+				oldval = this.vals[idx];
+				this.vals[idx]= plainPassword;
+				return oldval;
+			}
 			offset += 1;
 			if (offset > this.N) {
 				// buckets full. Nowhere to sleep
 				return plainPassword;
 			}
+			idx = (hashval + offset) % this.N;
 		}
 		this.keys[idx] = encryptedPassword;
 		this.vals[idx] = plainPassword;
 		this.size += 1;
 		this.nProbes += (offset + 1);
-
+		
+		if ((double)(this.size)/this.N > 0.5)
+			this.doubleTableSize();
 		return oldval;
+	}
+	
+	private void doubleTableSize() {
+		int newN = N*2+1;
+		while (!this.isPrime(newN)) {
+			newN++;
+		}
+		int NewnProbes = 0;
+		String[] newKeys = new String[newN];
+		String[] newValues = new String[newN];
+		for (int idx = 0; idx < keys.length; idx ++) {
+			if (this.keys[idx] != null) {
+				int hashval = this.hashFunction(keys[idx], newN);
+				int index = 0;
+				int offset = 0;
+				String oldval = null; // not null only if SHA has already exist
+				while (newKeys[(index = (hashval + offset) % newN)] != null) {
+					offset += 1;
+					if (offset > newN) {
+						// buckets full. Nowhere to sleep
+						return;
+					}
+				}
+				newKeys[index] = this.keys[idx];
+				newValues[index] = this.vals[idx];
+				NewnProbes += (offset + 1);
+			}
+		}
+		this.keys = newKeys;
+		this.vals = newValues;
+		this.nProbes = NewnProbes;
+		this.N = newN;
+	}
+	
+	private boolean isPrime(int num) {
+		for (int i = 2; i < num; i ++)
+			if (num % i == 0)
+				return false;
+		return true;
 	}
 
 	@Override
@@ -79,8 +132,8 @@ public class DatabaseMine implements DatabaseInterface {
 		// TODO Auto-generated method stub
 		int hashval = this.hashFunction(encryptedPassword);
 		int offset = 0;
-		int idx;
-		while (!this.keys[(idx = (hashval + offset) % this.N)].equals(encryptedPassword)) {
+		int idx = 0;
+		while (this.keys[(idx = (hashval + offset) % this.N)].compareTo(encryptedPassword)!=0) {
 			offset += 1;
 			if (offset > this.N) {
 				// not found
@@ -107,5 +160,4 @@ public class DatabaseMine implements DatabaseInterface {
 		System.out.println("Number of displacements (due to collisions) " + this.nDisp);
 		System.out.println("*** End DatabaseMine Statistics ***");
 	}
-
 }
