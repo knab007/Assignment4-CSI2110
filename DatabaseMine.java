@@ -94,6 +94,7 @@ public class DatabaseMine implements DatabaseInterface {
 			newN++;
 		}
 		int NewnProbes = 0;
+		int NewnDisp = 0;
 		String[] newKeys = new String[newN];
 		String[] newValues = new String[newN];
 		for (int idx = 0; idx < keys.length; idx ++) {
@@ -102,6 +103,9 @@ public class DatabaseMine implements DatabaseInterface {
 				int index = 0;
 				int offset = 0;
 				String oldval = null; // not null only if SHA has already exist
+				if (newKeys[hashval] != null) {
+					NewnDisp += 1;
+				}
 				while (newKeys[(index = (hashval + offset) % newN)] != null) {
 					offset += 1;
 					if (offset > newN) {
@@ -117,6 +121,7 @@ public class DatabaseMine implements DatabaseInterface {
 		this.keys = newKeys;
 		this.vals = newValues;
 		this.nProbes = NewnProbes;
+		this.nDisp = NewnDisp;
 		this.N = newN;
 	}
 	
