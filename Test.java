@@ -8,7 +8,7 @@ public class Test {
 		DatabaseStandard database1 = new DatabaseStandard();
 		ArrayList<String> commonPass = new ArrayList<String>();
 		commonPass.add("123456");
-		commonPass.add("password");
+		commonPass.add("password"); 
 		commonPass.add("12345678");
 		commonPass.add("brady");
 		testCracker.createDatabase(commonPass, database1);
